@@ -6,15 +6,18 @@ use App\Filament\Resources\SessionsResource\Pages;
 use App\Filament\Resources\SessionsResource\RelationManagers;
 use App\Models\Sessiondata;
 use App\Models\Sessions;
+use App\Models\TeacherAssignment;
 use Filament\Forms;
+use Filament\Forms\Components\DatePicker;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\TextInput;
+use Filament\Forms\Components\TimePicker;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
 use Filament\Tables;
+use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Table;
-use Illuminate\Database\Eloquent\Builder;
-use Illuminate\Database\Eloquent\SoftDeletingScope;
+
 
 class SessionsResource extends Resource
 {
@@ -28,11 +31,24 @@ class SessionsResource extends Resource
     {
         return $form
             ->schema([
-                Select::make('teacher_assignment_id'),
-                TextInput::make('scheduled_date'),
-                TextInput::make('start_time'),
-                TextInput::make('end_time'),
-                TextInput::make('location'),
+                Select::make('teacher_assignment_id')
+                    ->label('Teacher Assignment')
+                    ->searchable()
+                    ->options(function () {
+                        return TeacherAssignment::with(['teacher', 'group', 'subject'])
+                            ->get()
+                            ->mapWithKeys(function ($assignment) {
+                                $teacherName = $assignment->teacher->name ?? 'Unknown Teacher';
+                                $groupName = $assignment->group->name ?? 'Unknown Group';
+                                $subjectName = $assignment->subject->name ?? 'Unknown Subject';
+                                $label = "{$teacherName} - {$groupName} - {$subjectName}";
+                                return [$assignment->id => $label];
+                            })
+                            ->toArray();
+                    }),
+                DatePicker::make('scheduled_date'),
+                TimePicker::make('start_time'),
+                TimePicker::make('end_time'),
             ]);
     }
 
@@ -40,7 +56,24 @@ class SessionsResource extends Resource
     {
         return $table
             ->columns([
-                //
+                TextColumn::make('teacher_assignment_id')
+                    ->label('Session')
+                    ->formatStateUsing(function ($state, $record) {
+                        $assignment = $record->teacherAssignment;
+                        if ($assignment) {
+                            $teacherName = $assignment->teacher->name;
+                            $groupName = $assignment->group->name;
+                            $subjectName = $assignment->subject->name;
+
+                            return "{$teacherName} - {$groupName} - {$subjectName}";
+                        }
+                    }),
+                TextColumn::make('scheduled_date')
+                    ->date(),
+                TextColumn::make('start_time')
+                    ->time(),
+                TextColumn::make('end_time')
+                    ->time(),
             ])
             ->filters([
                 //

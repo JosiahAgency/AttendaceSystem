@@ -14,34 +14,28 @@ class UserSeeder extends Seeder
      */
     public function run(): void
     {
-        // User::create([
-        //     'name' => 'Admin User',
-        //     'email' => 'admin@admin.com',
-        //     'role' => 'admin',
-        //     'password' => Hash::make('pass'),
-        // ]);
+        User::create([
+            'name' => 'Admin User',
+            'email' => 'admin@admin.com',
+            'role' => 'admin',
+            'password' => Hash::make('pass'),
+        ]);
 
-        // User::create([
-        //     'name' => 'Teacher User',
-        //     'email' => 'teacher@school.com',
-        //     'role' => 'teacher',
-        //     'password' => Hash::make('pass'),
-        // ]);
+        User::factory()
+            ->count(10)
+            ->create([
+                'role' => 'teacher',
+                'password' => Hash::make('password'),
+            ]);
 
-        // $studentsPerGroup = 10;
+        $studentsPerGroup = 10;
 
-        // foreach (range(1, 5) as $groupId) {
-        //     User::factory()->count($studentsPerGroup)->create([
-        //         'role' => 'student',
-        //         'group_id' => $groupId,
-        //     ]);
-        // }
+        foreach (range(1, 5) as $groupId) {
+            User::factory()->count($studentsPerGroup)->create([
+                'role' => 'student',
+                'group_id' => $groupId,
+            ]);
+        }
 
-        // User::factory()
-        //     ->count(10)
-        //     ->create([
-        //         'role' => 'teacher',
-        //         'password' => Hash::make('password'),
-        //     ]);
     }
 }

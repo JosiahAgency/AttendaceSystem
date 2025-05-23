@@ -50,9 +50,15 @@ class TeacherAssignmentResource extends Resource
     {
         return $table
             ->columns([
-                TextColumn::make('teacher.name'),
-                TextColumn::make('group.name'),
-                TextColumn::make('subject.name'),
+                TextColumn::make('teacher.name')
+                    ->sortable()
+                    ->searchable(),
+                TextColumn::make('group.name')
+                    ->sortable()
+                    ->searchable(),
+                TextColumn::make('subject.name')
+                    ->sortable()
+                    ->searchable(),
             ])
             ->filters([
                 //

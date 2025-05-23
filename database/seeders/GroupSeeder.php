@@ -15,6 +15,11 @@ class GroupSeeder extends Seeder
     {
         $groups = [
             [
+                'name' => 'Grade 8',
+                'created_at' => now(),
+                'updated_at' => now(),
+            ],
+            [
                 'name' => 'Grade 9',
                 'created_at' => now(),
                 'updated_at' => now(),
