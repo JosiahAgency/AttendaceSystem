@@ -3,6 +3,7 @@
 namespace App\Filament\Resources\StudentgroupsResource\Pages;
 
 use App\Filament\Resources\StudentgroupsResource;
+use App\Filament\Widgets\GroupOverview;
 use Filament\Actions;
 use Filament\Resources\Pages\ListRecords;
 
@@ -14,6 +15,13 @@ class ListStudentgroups extends ListRecords
     {
         return [
             Actions\CreateAction::make(),
+        ];
+    }
+
+    protected function getHeaderWidgets(): array
+    {
+        return [
+            GroupOverview::class,
         ];
     }
 }

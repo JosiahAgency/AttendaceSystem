@@ -4,6 +4,7 @@ namespace App\Filament\Resources;
 
 use App\Filament\Resources\StudentgroupsResource\Pages;
 use App\Filament\Resources\StudentgroupsResource\RelationManagers;
+use App\Filament\Widgets\GroupOverview;
 use App\Models\Studentgroups;
 use Filament\Forms;
 use Filament\Forms\Components\TextInput;
@@ -57,6 +58,13 @@ class StudentgroupsResource extends Resource
     {
         return [
             //
+        ];
+    }
+
+    public static function getWidgets(): array
+    {
+        return [
+            GroupOverview::class,
         ];
     }
 

@@ -4,6 +4,7 @@ namespace App\Filament\Resources;
 
 use App\Filament\Resources\UserResource\Pages;
 use App\Filament\Resources\UserResource\RelationManagers;
+use App\Filament\Widgets\UsersStats;
 use App\Models\Studentgroups;
 use App\Models\User;
 use Filament\Forms;
@@ -89,6 +90,13 @@ class UserResource extends Resource
                     ->hidden(fn(Get $get): bool => $get('role') !== 'student')
                     ->options(Studentgroups::all()->pluck('name', 'id')),
             ]);
+    }
+
+    public static function getWidgets(): array
+    {
+        return [
+            UsersStats::class,
+        ];
     }
 
     public static function getRelations(): array

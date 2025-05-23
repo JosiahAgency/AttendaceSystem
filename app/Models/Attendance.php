@@ -17,11 +17,11 @@ class Attendance extends Model
 
     public function user()
     {
-        return $this->belongsTo(User::class);
+        return $this->belongsTo(User::class, 'student_id');
     }
 
     public function session()
     {
-        return $this->belongsTo(Sessiondata::class);
+        return $this->belongsTo(Sessiondata::class, 'session_id');
     }
 }

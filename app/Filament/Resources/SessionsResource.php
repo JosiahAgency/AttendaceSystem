@@ -4,6 +4,7 @@ namespace App\Filament\Resources;
 
 use App\Filament\Resources\SessionsResource\Pages;
 use App\Filament\Resources\SessionsResource\RelationManagers;
+use App\Filament\Widgets\CalendarWidget;
 use App\Models\Sessiondata;
 use App\Models\Sessions;
 use App\Models\TeacherAssignment;
@@ -86,6 +87,13 @@ class SessionsResource extends Resource
                     Tables\Actions\DeleteBulkAction::make(),
                 ]),
             ]);
+    }
+
+    public static function getWidgets(): array
+    {
+        return [
+            CalendarWidget::class,
+        ];
     }
 
     public static function getRelations(): array
